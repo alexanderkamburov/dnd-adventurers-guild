@@ -1,5 +1,6 @@
 <?php
 
+// deprecated
 function roll($numDice, $faces, $modifier = 0) {
     $total = 0;
     for ($i = 1; $i <= $numDice; $i++) {
@@ -108,7 +109,7 @@ const QUEST_TYPES = [
 
 function determineQuest() {
     $diceRoll = roll(1,6) - 1;
-
+    $questType = array_keys(QUEST_TYPES)[$diceRoll];
 }
 
 function runQuests() {

@@ -1,0 +1,21 @@
+{
+    "name": "alexanderkamburov/dnd-adventurers-guild",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Kamburov",
+            "email": "office@alexanderkamburov.com"
+        },
+        {
+            "name": "Nikolay Boshnakov"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AdventurersGuild\\": "src/AdventurersGuild",
+            "Config\\": "config"
+        }
+    },
+    "require": {}
+}
