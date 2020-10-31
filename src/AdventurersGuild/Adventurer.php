@@ -4,6 +4,7 @@ namespace AdventurersGuild;
 
 class Adventurer {
     protected $class;
+
     protected $strength;
     protected $dexterity;
     protected $constitution;
@@ -149,5 +150,9 @@ class Adventurer {
         $this->class = $class;
 
         return $this;
+    }
+
+    static function calculateAttributeModifier(int $attribute) {
+        return ($attribute - 10) / 2;
     }
 }

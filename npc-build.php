@@ -57,6 +57,11 @@ function roll($numDice, $faces, $modifier = 0) {
 
 // 1d20 + modifier
 
+//0 Successes: Job fails; Roll on permanent injury table; Reduce Popularity by DC/2;
+// 1 Success: Job fails; Adventurer escapes unharmed;
+// 2 Successes: Half the payout; Gain Popularity equal to DC/2(round down)
+// 3 Successes: Full payout; Gain Popularity equal to DC
+
 const QUEST_TYPES = [
     'exploration' => [
         'perception',

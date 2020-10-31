@@ -36,9 +36,9 @@ class QuestFactory
         return $misunderstoodQuest;
     }
 
-    protected function generateQuestType()
+    public function generateQuestType()
     {
-        return array_keys(Config::QUEST_TYPES)[Dice::roll(1,6) - 1];
+        return Config::QUEST_TYPES[Dice::roll(1,6) - 1];
     }
 
     protected function generateQuestStats() {
