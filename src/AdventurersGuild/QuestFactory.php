@@ -2,7 +2,7 @@
 
 namespace AdventurersGuild;
 
-use Config\QuestConfig;
+use Config\Config;
 use AdventurersGuild\Dice;
 use AdventurersGuild\Quest;
 
@@ -38,7 +38,7 @@ class QuestFactory
 
     protected function generateQuestType()
     {
-        return array_keys(QuestConfig::QUEST_TYPES)[Dice::roll(1,6) - 1];
+        return array_keys(Config::QUEST_TYPES)[Dice::roll(1,6) - 1];
     }
 
     protected function generateQuestStats() {
@@ -49,11 +49,11 @@ class QuestFactory
         // }
 
         $difficulty = '';
-        if ($dc <= QuestConfig::MAX_DC_EASY) {
+        if ($dc <= Config::MAX_DC_EASY) {
             $difficulty = Quest::DIFFICULTY_EASY;
-        } elseif ($dc <= QuestConfig::MAX_DC_MEDIUM) {
+        } elseif ($dc <= Config::MAX_DC_MEDIUM) {
             $difficulty = Quest::DIFFICULTY_MEDIUM;
-        } elseif ($dc <= QuestConfig::MAX_DC_HARD) {
+        } elseif ($dc <= Config::MAX_DC_HARD) {
             $difficulty = Quest::DIFFICULTY_HARD;
         } else {
             $difficulty = Quest::DIFFICULTY_VERY_HARD;
@@ -63,17 +63,17 @@ class QuestFactory
         $loReward = 0;
         $hiReward = 0;
         if ($difficulty == Quest::DIFFICULTY_EASY) {
-            $lo = QuestConfig::DC_EASY_CASH[0];
-            $hi = QuestConfig::DC_EASY_CASH[1];
+            $lo = Config::DC_EASY_CASH[0];
+            $hi = Config::DC_EASY_CASH[1];
         } elseif ($difficulty == Quest::DIFFICULTY_MEDIUM) {
-            $lo = QuestConfig::DC_MEDIUM_CASH[0];
-            $hi = QuestConfig::DC_MEDIUM_CASH[1];
+            $lo = Config::DC_MEDIUM_CASH[0];
+            $hi = Config::DC_MEDIUM_CASH[1];
         } elseif ($difficulty == Quest::DIFFICULTY_HARD) {
-            $lo = QuestConfig::DC_HARD_CASH[0];
-            $hi = QuestConfig::DC_HARD_CASH[1];
+            $lo = Config::DC_HARD_CASH[0];
+            $hi = Config::DC_HARD_CASH[1];
         } else {
-            $lo = QuestConfig::DC_VERY_HARD_CASH[0];
-            $hi = QuestConfig::DC_VERY_HARD_CASH[1];
+            $lo = Config::DC_VERY_HARD_CASH[0];
+            $hi = Config::DC_VERY_HARD_CASH[1];
         }
 
         $cash = rand($lo, $hi);

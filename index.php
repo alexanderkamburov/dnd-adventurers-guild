@@ -52,6 +52,7 @@ switch ($adventurerJudgementRoll) {
         $adventurerJudgement = 'poor';
         break;
 }
+var_dump($adventurerJudgement);
 
 $adventurer = $adventurerFactory->createQuestAdventurer($perceivedQuest, $adventurerJudgement);
 

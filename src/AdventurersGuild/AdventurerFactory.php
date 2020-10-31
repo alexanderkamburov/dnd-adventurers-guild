@@ -3,7 +3,6 @@
 namespace AdventurersGuild;
 
 use Config\Config;
-use Config\QuestConfig;
 use AdventurersGuild\Dice;
 use AdventurersGuild\Quest;
 use AdventurersGuild\Adventurer;
@@ -18,31 +17,23 @@ class AdventurerFactory
             throw new \InvalidArgumentException;
         }
 
-        $adventurerClassesForQuest = QuestConfig::QUEST_ADVENTURERS[$questType];
+        $adventurerClassesForQuest = Config::QUEST_ADVENTURERS[$questType];
 
         $chosenClass;
+        // make sure there are 4 adventurer classes in the class array
         for ($i = 0; $i < 4; $i++) {
+            // if there already is a value set, continue
             if (array_key_exists($i, $adventurerClassesForQuest) && $adventurerClassesForQuest[$i]) {
                 continue;
             }
 
-            foreach (array_keys(Config::CLASSES) as $class) {
+            foreach (Config::CLASSES as $class) {
                 if (in_array($class, $adventurerClassesForQuest)) {
                     continue;
                 }
 
                 $adventurerClassesForQuest[$i] = $class;
             }
-
-            // while (!array_key_exists($i, $adventurerClassesForQuest) || !$adventurerClassesForQuest[$i]) {
-            //     foreach (array_keys(Config::CLASSES) as $class) {
-            //         if (in_array($class, $adventurerClassesForQuest)) {
-            //             continue;
-            //         }
-
-            //         $adventurerClassesForQuest[$i] = $class;
-            //     }
-            // }
         }
 
         switch ($judgement) {
@@ -63,13 +54,18 @@ class AdventurerFactory
                 break;
         }
 
-        var_dump($chosenClass, $judgement);
+        return $this->createAdventurer($chosenClass);
     }
 
     public function createRandomAdventurer() {
         $index = rand(0,count(Config::CLASSES) - 1);
-        $className = array_keys(Config::CLASSES)[$index];
-        $class = array_values(Config::CLASSES)[$index];
+        $className = Config::CLASSES[$index];
+        return $this->createAdventurer($className);
+    }
+
+    public function createAdventurer($className)
+    {
+        $classAttributes = Config::CLASS_ATTRIBUTES[$className];
 
         $statCount = 6;
         $stats = [];
@@ -104,7 +100,7 @@ class AdventurerFactory
         $adventurer->setClass($className);
 
 
-        foreach ($class as $index => $attribute) {
+        foreach ($classAttributes as $index => $attribute) {
             $matches = [];
             if (preg_match('/([a-zA-z]+)(?:\/)([a-zA-z]+)/', $attribute, $matches)) {
                 $attribute = $matches[1]; // temporary
