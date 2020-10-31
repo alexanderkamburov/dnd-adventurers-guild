@@ -20,6 +20,10 @@ class GuildManagerReport
 
     protected $adventurerStatus = self::ADVENTURER_STATUS_NO_INJURY;
     protected $outcomeType;
+    /**
+     * @var boolean
+     */
+    protected $questFailed = false;
     protected $reward = 0;
     protected $adventurerShare = 0;
     protected $guildShare = 0;
@@ -122,6 +126,7 @@ class GuildManagerReport
     public function markCompleteSuccess()
     {
         $this->outcomeType = self::OUTCOME_COMPLETE_SUCCESS;
+        $this->questFailed = false;
 
         return $this;
     }
@@ -129,6 +134,7 @@ class GuildManagerReport
     public function markCloseSuccess()
     {
         $this->outcomeType = self::OUTCOME_CLOSE_SUCCESS;
+        $this->questFailed = false;
 
         return $this;
     }
@@ -136,6 +142,7 @@ class GuildManagerReport
     public function markCloseFailure()
     {
         $this->outcomeType = self::OUTCOME_CLOSE_FAILURE;
+        $this->questFailed = true;
 
         return $this;
     }
@@ -143,6 +150,7 @@ class GuildManagerReport
     public function markCompleteFailure()
     {
         $this->outcomeType = self::OUTCOME_COMPLETE_FAILURE;
+        $this->questFailed = true;
 
         return $this;
     }
@@ -310,5 +318,25 @@ class GuildManagerReport
     public function getGuildShare()
     {
         return $this->guildShare;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isQuestFailed()
+    {
+        return $this->questFailed;
+    }
+
+    /**
+     * @param boolean $questFailed
+     *
+     * @return self
+     */
+    public function setQuestFailed($questFailed)
+    {
+        $this->questFailed = $questFailed;
+
+        return $this;
     }
 }

@@ -147,7 +147,6 @@ interface Config
     ];
 
     const INJURIES = [
-        'no injury',
         'minor injury',
         'light injury',
         'moderate injury',
@@ -156,7 +155,6 @@ interface Config
     ];
 
     const INJURY_PAYMENT_REST = [
-        'no injury' => [0, 0],
         'minor injury' => [0, 0],
         'light injury' => [50, 1],
         'moderate injury' => [200, 2],

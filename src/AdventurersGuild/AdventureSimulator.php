@@ -7,6 +7,7 @@ use AdventurersGuild\Quest;
 use AdventurersGuild\Adventurer;
 
 /**
+ * @todo  for different dcs, use more than adventurer
  * @todo  add injuries
  * @todo  add death
  */
@@ -19,9 +20,9 @@ class AdventureSimulator
         $this->questFactory = $questFactory;
     }
 
-    public function simulateQuest(Quest $quest, Adventurer $adventurer, GuildManagerReport $outcome)
+    public function simulateQuest(Quest $quest, Adventurer $adventurer, GuildManagerReport $report)
     {
-        $outcome->setQuest($quest);
+        $report->setQuest($quest);
 
         $questDc = $quest->getDc();
         $questType = $quest->getType();
@@ -40,9 +41,9 @@ class AdventureSimulator
         }
 
         if ($complication) {
-            $outcome->setComplication(true);
+            $report->setComplication(true);
             $complicationType = $this->questFactory->generateQuestType();
-            $outcome->setComplicationType($complicationType);
+            $report->setComplicationType($complicationType);
             $skillsToCheck = array_merge($skillsToCheck, Config::QUEST_SKILLS[$complicationType]);
         }
 
@@ -64,33 +65,48 @@ class AdventureSimulator
         }
 
         $reward = $quest->getReward();
-        if ($complication) {
-            $reward *= 2;
-        }
+        // if ($complication) {
+        //     $reward *= 2;
+        // }
+
+        // todo think about extra loot + terms
 
         switch ($tally) {
             case $tally == 3:
-                $outcome->markCompleteSuccess()->setReward($reward);
+                $report->markCompleteSuccess()->setReward($reward);
+                $hasInjuryRoll = Dice::roll(1,100);
+                if ($hasInjuryRoll == 1) {
+                    $injuryTypeRoll = Dice::roll(1,100);
+                    if ($injuryTypeRoll <= 50) {
+                        $report->setAdventurerStatusMinorInjury();
+                    } else {
+                        $report->setAdventurerStatusLightInjury();
+                    }
+                }
+                // very small chance, max light injury 1/100
                 break;
 
             case $tally == 2:
                 $reward = $reward / 2;
-                $outcome->markCloseSuccess()->setReward($reward);
+                $report->markCloseSuccess()->setReward($reward);
+                // 10/100, max light
                 break;
 
             case $tally == 1:
-                $outcome->markCloseFailure();
+                $report->markCloseFailure();
+                // 20/100, max moderate
                 break;
 
             case $tally == 0:
-                $outcome->markCompleteFailure();
+                $report->markCompleteFailure();
+                // 75/100, no holds barred
                 break;
         }
 
-        if ($outcome->isCompleteFailure()) {
+        if ($report->isCompleteFailure()) {
             // do injury stuff
         }
 
-        return $outcome;
+        return $report;
     }
 }
