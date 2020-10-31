@@ -21,8 +21,6 @@ const DC_MEDIUM_CASH = [300, 800];
 const DC_HARD_CASH = [800, 1200];
 const DC_VERY_HARD_CASH = [1200, 1500];
 
-
-
 function generateQuestStats(callback $dcRoll = null) {
     if ($dcRoll) { // @todo test
         $dc = dcRoll();
@@ -72,6 +70,45 @@ function generateQuestStats(callback $dcRoll = null) {
     }
 
     return [$dc, $cash];
+}
+
+
+const QUEST_TYPES = [
+    'exploration' => [
+        'perception',
+        'investigation',
+        'stealth'
+    ],
+    'combat' => [
+        'atheltics',
+        'acrobatic',
+        'insight'
+    ],
+    'social' => [
+        'persuasion',
+        'intimidation',
+        'insight'
+    ],
+    'sneak' => [
+        'stealth',
+        'sleight of hand',
+        'investigation'
+    ],
+    'knowledge' => [
+        'arcana',
+        'history',
+        'nature'
+    ],
+    'gather' => [
+        'survival',
+        'medicine',
+        'nature'
+    ]
+];
+
+function determineQuest() {
+    $diceRoll = roll(1,6) - 1;
+
 }
 
 function runQuests() {
