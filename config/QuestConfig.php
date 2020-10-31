@@ -46,4 +46,38 @@ interface QuestConfig
             'nature'
         ]
     ];
+
+    // by order of aptitude, desc
+    const QUEST_ADVENTURERS = [
+        'exploration' => [
+            'ranger',
+            'druid',
+            'monk'
+        ],
+        'combat' => [
+            'monk',
+            'ranger',
+            'cleric'
+        ],
+        'social' => [
+            'bard',
+            'sorcerer',
+            'warlock'
+        ],
+        'sneak' => [
+            'rogue',
+            'monk',
+            'wizard'
+        ],
+        'knowledge' => [
+            'wizard',
+            'rogue',
+            ''
+        ],
+        'gather' => [
+            'ranger',
+            'druid',
+            ''
+        ]
+    ];
 }
